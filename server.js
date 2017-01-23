@@ -8,11 +8,11 @@ var methodOverride = require('method-override'); // simulate DELETE and PUT (exp
 
 //Configuration
 mongoose.connect('mongodb://localhost/youtunes');
-app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
-app.use(morgan('dev'));                                         // log every request to the console
-app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
-app.use(bodyParser.json());                                     // parse application/json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+app.use(express.static(__dirname + '/public'));
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(methodOverride());
 
 //Mongoose database model
@@ -20,6 +20,7 @@ app.use(methodOverride());
       text : String
   });
 
+    //Gets all of the songs from /api/list
     app.get('/api/list', function(req, res) {
         //Mongoose to find all songs in db
         Song.find(function(err, list) {
@@ -29,6 +30,7 @@ app.use(methodOverride());
         });
     });
 
+    //Creates a new song entry
     app.post('/api/list', function(req, res) {
         Song.create({
             text : req.body.text,
@@ -46,27 +48,28 @@ app.use(methodOverride());
 
     });
 
-    // app.delete('/api/list/:list_id', function(req, res) {
-    //     Song.remove({
-    //         _id : req.params.list_id
-    //     }, function(err, list) {
-    //         if (err)
-    //             res.send(err);
+    //Removes a song from the list
+    app.delete('/api/list/:list_id', function(req, res) {
+        Song.remove({
+            _id : req.params.list_id
+        }, function(err, list) {
+            if (err)
+                res.send(err);
 
-    //        //Get all songs are song post created
-    //         Todo.find(function(err, todos) {
-    //             if (err)
-    //                 res.send(err)
-    //             res.json(list);
-    //         });
-    //     });
-    // });
+           //Get all songs are song post created
+            Song.find(function(err, todos) {
+                if (err)
+                    res.send(err)
+                res.json(list);
+            });
+        });
+    });
 
     //Load single page front-end Angular
     app.get('*', function(req, res) {
         res.sendFile('./public/index.html');
     });
 
-    // listen (start app with node server.js) ======================================
+    // listen
     app.listen(3000);
     console.log("App listening on port 3000");

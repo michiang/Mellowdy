@@ -12,6 +12,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
   <script src="songs.js"></script>
+  <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
 </head>
 
 <body ng-controller="mainController">
@@ -38,9 +39,19 @@
       <!--song list, loop over each song in $scope.list -->
       <div id="songlist" class="row">
         <div class="col-sm-4 col-sm-offset-4">
-          <div class="delete" ng-repeat="song in list" ng-click="deleteSong()">
+          <div class="delete" ng-repeat="song in list" ng-click="deleteSong(song._id)">
           <div class='info'>
             <div class='text'>{{ song.text }}</div>
+            <script>
+            SC.initialize({
+              client_id: 'YOUR_CLIENT_ID'
+            });
+
+            var track_url = 'http://soundcloud.com/forss/flickermood';
+            SC.oEmbed(track_url, { auto_play: true }).then(function(oEmbed) {
+            console.log('oEmbed response: ', oEmbed);
+            });
+          </script>
           </div>
         </div>
       </div>

@@ -35,7 +35,7 @@ app.use(methodOverride());
         Song.create({
             text : req.body.text,
             done : false
-        }, function(err, todo) {
+        }, function(err, list) {
             if (err)
                 res.send(err);
             //After creating, send back all songs
@@ -56,8 +56,8 @@ app.use(methodOverride());
             if (err)
                 res.send(err);
 
-           //Get all songs are song post created
-            Song.find(function(err, todos) {
+           //Get all songs after song post created
+            Song.find(function(err, list) {
                 if (err)
                     res.send(err)
                 res.json(list);
@@ -66,9 +66,9 @@ app.use(methodOverride());
     });
 
     //Load single page front-end Angular
-    app.get('*', function(req, res) {
-        res.sendFile('./public/index.html');
-    });
+    // app.get('*', function(req, res) {
+    //     res.sendFile('./public/index.html');
+    // });
 
     // listen
     app.listen(3000);

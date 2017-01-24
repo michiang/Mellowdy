@@ -27,7 +27,7 @@ function mainController($scope, $http) {
             });
     };
 
-    // delete a todo after checking it
+    // Delete a song when you click on the text
     $scope.deleteSong = function(id) {
         $http.delete('/api/list/' + id)
             .success(function(data) {
@@ -45,7 +45,7 @@ function mainController($scope, $http) {
         params: {
           key: 'AIzaSyAaVxe2e6AbU3FD2pKTQh1_AySRHC1NY8I',
           type: 'video',
-          maxResults: '10',
+          maxResults: '1',
           pageToken: isNewQuery ? '' : $scope.nextPageToken,
           part: 'id,snippet',
           fields: 'items/id,items/snippet/title,items/snippet/description,items/snippet/thumbnails/default,items/snippet/channelTitle,nextPageToken',
@@ -54,18 +54,14 @@ function mainController($scope, $http) {
       })
       .success( function (data) {
         if (data.items.length === 0) {
-          $scope.label = 'No results were found!';
+          console.log('No results were found!');
         }
-        VideosService.listResults(data, $scope.nextPageToken && !isNewQuery);
-        $scope.nextPageToken = data.nextPageToken;
-        $log.info(data);
-        $scope.loading = false;
+        results.push(data);
+        return results;
       })
       .error( function (e) {
-        $log.info('Search error: ', e);
-        $scope.loading = false;
-      })
-      ;
+        console.log("error");
+      });
     };
 
 }

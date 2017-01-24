@@ -28,7 +28,7 @@
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: 'M7lc1UVf-VE',
+          videoId: 't10s26GsWvY',
         });
       }
       function getId(url) {
@@ -80,14 +80,15 @@ $('#myBtn').click(function () {
 
       <!--song list, loop over each song in $scope.list -->
       <div id="songlist" class="row">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
           <div class="delete" ng-repeat="song in list" ng-click="deleteSong(song._id)">
           <div class='info'>
             <div class='text'>{{ song.text }}</div>
-            <div id="player"></div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/YQHsXMglC9A" frameborder="0" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/t10s26GsWvY" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/wuC1fHTnuJs" frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/YQHsXMglC9A" frameborder="0" allowfullscreen></iframe>
       </div>
   </div>
 </body>

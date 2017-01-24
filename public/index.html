@@ -9,44 +9,11 @@
         #songlist              { margin-bottom:30px; }
     </style>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="songs.js"></script>
   <script src="https://apis.google.com/js/client.js?onload=init"></script>
-
-</head>
-
-<body ng-controller="mainController">
-  <div class="container">
-  <!--Header-->
-   <div class="jumbotron text-center">
-      <h1>YouTunes</h1>
-      <p>Share music with your friends!</p>
-    </div>
-      <!--Form to post new song-->
-    <div id="song-form" class="row">
-      <div class="col-sm-8 col-sm-offset-2 text-center">
-        <form>
-          <div class = "form">
-            <input type="text" class="form-control input-lg text-center" placeholder="Enter your song here" ng-model="formData.text">
-          </div>
-
-          <!-- createSong() will create new song post -->
-          <button type="submit" class="btn btn-primary btn-lg" ng-click="createSong()">Add Song</button>
-        </form>
-      </div>
-    </div>
-
-      <!--song list, loop over each song in $scope.list -->
-      <div id="songlist" class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-          <div class="delete" ng-repeat="song in list" ng-click="deleteSong(song._id)">
-          <div class='info'>
-            <div class='text'>{{ song.text }}</div>
-             <iframe id="player" type="text/html" width="640" height="390"
-              src="http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1&origin=http://example.com" frameborder="0"></iframe>
-
-    <script>
+  <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -62,36 +29,66 @@
           height: '390',
           width: '640',
           videoId: 'M7lc1UVf-VE',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
         });
       }
+      function getId(url) {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
 
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
+    if (match && match[2].length == 11) {
+        return match[2];
+    } else {
+        return 'error';
+    }
+}
 
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
-    </script>
+var myId;
+
+$('#myBtn').click(function () {
+    var myUrl = $('#myUrl').val();
+    myId = getId(myUrl);
+
+    $('#myId').html(myId);
+
+    $('#myCode').html('<iframe width="560" height="315" src="//www.youtube.com/embed/' + myId + '" frameborder="0" allowfullscreen></iframe>');
+});
+
+      </script>
+</head>
+
+<body ng-controller="mainController">
+  <div class="container">
+  <!--Header-->
+   <div class="jumbotron text-center">
+      <h1>YouTunes</h1>
+      <p>Share music with your friends!</p>
+    </div>
+      <!--Form to post new song-->
+    <div id="song-form" class="row">
+      <div class="col-sm-8 col-sm-offset-2 text-center">
+        <form>
+          <div class = "form">
+            <input id="myUrl" type="text" value="http://www.youtube.com/watch?v=zbYf5_S7oJo" class="form-control input-lg text-center" placeholder="Enter your song here" ng-model="formData.text">
+          </div>
+          <div>
+          <!-- createSong() will create new song post -->
+          <button id="myBtn" type="submit" class="btn btn-primary btn-lg" ng-click="createSong()">Add Song</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+      <!--song list, loop over each song in $scope.list -->
+      <div id="songlist" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+          <div class="delete" ng-repeat="song in list" ng-click="deleteSong(song._id)">
+          <div class='info'>
+            <div class='text'>{{ song.text }}</div>
+            <div id="player"></div>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/YQHsXMglC9A" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
-
   </div>
 </body>
 </html>

@@ -7,8 +7,9 @@ var bodyParser = require('body-parser');    // pull information from HTML POST (
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
 //Configuration
+var port = process.env.PORT || 3000;
 process.env.PORT ? uri = 'mongodb://heroku_brz19smq:5sn0nsgi25ee6snfqsm8l4g12t@ds023694.mlab.com:23694/heroku_brz19smq' : uri = 'mongodb://localhost/youtunes';
-mongoose.connect('uri');
+mongoose.connect(uri);
 app.use(express.static(__dirname + '/public'));
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({'extended':'true'}));
@@ -72,6 +73,5 @@ app.use(methodOverride());
     // });
 
     // listen
-    var port = process.env.PORT || 3000;
     app.listen(port);
     console.log("App listening on port 3000");

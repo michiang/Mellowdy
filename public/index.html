@@ -13,55 +13,14 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="songs.js"></script>
   <script src="https://apis.google.com/js/client.js?onload=init"></script>
-  <script>
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 't10s26GsWvY',
-        });
-      }
-      function getId(url) {
-    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
-
-    if (match && match[2].length == 11) {
-        return match[2];
-    } else {
-        return 'error';
-    }
-}
-
-var myId;
-
-$('#myBtn').click(function () {
-    var myUrl = $('#myUrl').val();
-    myId = getId(myUrl);
-
-    $('#myId').html(myId);
-
-    $('#myCode').html('<iframe width="560" height="315" src="//www.youtube.com/embed/' + myId + '" frameborder="0" allowfullscreen></iframe>');
-});
-
-      </script>
 </head>
 
 <body ng-controller="mainController">
   <div class="container">
   <!--Header-->
    <div class="jumbotron text-center">
-      <h1>YouTunes</h1>
-      <p>Share music with your friends!</p>
+      <h1>Mellowdy</h1>
+      <p>A Musical Wonderland For You and Your Friends!</p>
     </div>
       <!--Form to post new song-->
     <div id="song-form" class="row">
@@ -82,11 +41,13 @@ $('#myBtn').click(function () {
       <div id="songlist" class="row">
         <div class="col-sm-8 col-sm-offset-2 text-center">
           <div class="delete" ng-repeat="song in list" ng-click="deleteSong(song._id)">
-          <div class='info'>
+          <div id='info'>
             <div class='text'>{{ song.text }}</div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/t10s26GsWvY" frameborder="0" allowfullscreen></iframe>
+            <div id="player"></div>
+          <iframe name = "someFrame" id = "someFrame" width="560" height="315" src= "https://www.youtube.com/embed/t10s26GsWvY" autoplay="1" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
+        <iframe name = "someFrame" id = "someFrame" width="560" height="315" src= "https://www.youtube.com/embed/v48pibjFWeg" autoplay="1" frameborder="0" allowfullscreen></iframe>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/wuC1fHTnuJs" frameborder="0" allowfullscreen></iframe>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/YQHsXMglC9A" frameborder="0" allowfullscreen></iframe>
       </div>
